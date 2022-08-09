@@ -1,0 +1,114 @@
+
+    <h1 class="display-6 text-center">Sellers</h1>
+  
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add Seller
+    </button>
+  
+    <table class="table table-sellers">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Name</th>
+          <th scope="col">Lastname</th>
+          <th scope="col">Document</th>
+          <th scope="col">City</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let seller of sellerlist">
+          <th>{{ seller.Code }}</th>
+          <td>{{ seller.Name }}</td>
+          <td>{{ seller.Lastname }}</td>
+          <td>{{ seller.DocNumber }}</td>
+          <td>{{ seller.CityName }}</td>
+          <td class="text-center">
+            <a class="nav-link py-2 px-0 px-lg-2" data-bs-toggle="modal" href="#editSellerModal" data-rel="{{seller.Code}}" rel="noopener" style="cursor: pointer !important;" (click)="getSellerById(seller.Code)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16" role="img">
+                <title>Ver</title>
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+              </svg>
+            </a>          
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+  
+    <!-- Modal Add -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form #loginForm="ngForm" (ngSubmit)="addNewSeller(loginForm)" id="addSellerForm" class="needs-validation" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Seller</h5>
+              <button type="button" #addModal class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="TxtName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="TxtName" name="TxtName" [(ngModel)]="sellerInfo.Name" placeholder="Sophie" required>        
+              </div>
+              <div class="mb-3">
+                <label for="TxtLastname" class="form-label">Lastname</label>
+                <input type="text" class="form-control" id="TxtLastname" name="TxtLastname" [(ngModel)]="sellerInfo.Lastname" placeholder="Cawson" required>
+              </div>
+              <div class="mb-3">
+                <label for="TxtDocNumber" class="form-label">Document</label>
+                <input type="number" class="form-control" id="TxtDocNumber" name="TxtDocNumber" [(ngModel)]="sellerInfo.DocNumber" placeholder="1234567890" required>
+              </div>
+              <div class="mb-3">
+                <label for="SltCities" class="form-label">City</label>
+                <select class="form-select" aria-label="Default select example" id="SltCities" name="SltCities" [(ngModel)]="sellerInfo.CityCode" required>
+                  <option value="-1">Choose city</option>
+                  <option *ngFor="let city of citieslist" [value]="city.Code">{{ city.Description }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>          
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal Edit -->
+    <div class="modal fade" id="editSellerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form #editForm="ngForm" (ngSubmit)="editSeller(editForm)" id="editSellerForm" class="needs-validation" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">About Seller</h5>
+              <button #editModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body lead">
+              <div class="mb-3">
+                <label for="TxtEditName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="TxtEditName" name="TxtEditName" [(ngModel)]="sellerInfo.Name" placeholder="Sophie" required>     
+              </div>
+              <div class="mb-3">
+                <label for="TxtEditLastname" class="form-label">Lastname</label>
+                <input type="text" class="form-control" id="TxtEditLastname" name="TxtEditLastname" [(ngModel)]="sellerInfo.Lastname" placeholder="Cawson" required>
+              </div>
+              <div class="mb-3">
+                <label for="TxtEditDocNumber" class="form-label">Document</label>
+                <input type="number" class="form-control" id="TxtEditDocNumber" name="TxtEditDocNumber" [(ngModel)]="sellerInfo.DocNumber" placeholder="1234567890" required>
+              </div>
+              <div class="mb-3">
+                <label for="SltEditCities" class="form-label">City</label>
+                <select class="form-select" aria-label="Default select example" id="SltEditCities" name="SltEditCities" [(ngModel)]="sellerInfo.CityCode" required>
+                  <option value="-1">Choose city</option>
+                  <option *ngFor="let city of citieslist" [value]="city.Code">{{ city.Description }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" (click)="deleteSeller(sellerInfo.Code)">Delete seller</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+            </div>
+          </form>          
+        </div>
+      </div>
+    </div>  

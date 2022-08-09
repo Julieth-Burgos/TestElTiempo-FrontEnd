@@ -1,0 +1,84 @@
+<h1 class="display-6 text-center">Cities</h1>
+<div class="text-center">
+    <div class="row">
+        <div class="col-md-6 offset-md-3" style="margin-top: 2%;">
+            <form #citiesForm="ngForm" (ngSubmit)="addNewCity(citiesForm)"  class="row g-3 align-items-center">
+                <div class="col-2">
+                    <label for="TxtCity" class="col-form-label">City</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="TxtCity" name="TxtCity" [(ngModel)]="citiesInfo.Description" placeholder="Cartagena">
+                </div>
+                <div class="col-2">
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </form>        
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <table class="table table-sellers">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let city of citieslist">
+                        <th scope="row">
+                            {{ city.Code }}
+                        </th>
+                        <td>
+                            {{ city.Description }}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editCityModal" (click)="getCityById(city.Code)" style="color: green !important;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <title>Editar</title>
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>                            
+                            </button>
+                        </td>
+                        <td>                            
+                            <button type="button" class="btn btn-link" (click)="deleteCity(city.Code)" style="color: red !important;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <title>Eliminar</title>                                    
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>                                  
+                            </button>                   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="editCityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form #editCityForm="ngForm" (ngSubmit)="editCity(editCityForm)" id="editCityForm" class="needs-validation" novalidate>
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">About City</h5>
+            <button #editModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body lead">
+                <div class="mb-3">
+                    <label for="TxtEditDescription" class="form-label">City</label>
+                    <input type="text" class="form-control" id="TxtEditDescription" name="TxtEditDescription" [(ngModel)]="citiesInfo.Description" placeholder="Sophie" required>     
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+            </div>
+        </form>          
+        </div>
+    </div>
+    </div>  
